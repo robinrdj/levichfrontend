@@ -87,7 +87,6 @@ export default function Comments({ user }) {
           Post
         </button>
       </div>
-
       {error && <p className="comments-error">{error}</p>}
       <p>All comments in the database</p>
       <ul className="comments-list">
