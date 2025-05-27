@@ -1,0 +1,129 @@
+.comments-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background-color: #1f2937; /* slate-800 */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  color: white;
+}
+
+.comments-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.comments-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.comments-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0edff;
+  color: #111827;
+}
+
+.comments-input::placeholder {
+  color: #6b7280;
+}
+
+.comments-post-button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.comments-post-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-item {
+  background-color: #374151; /* slate-700 */
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: relative;
+}
+
+.comment-text {
+  font-size: 1rem;
+}
+
+.comment-user {
+  font-size: 0.875rem;
+  color: #9ca3af; /* gray-400 */
+}
+
+.comment-delete-button {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: #ef4444; /* red-500 */
+  color: white;
+  border: none;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.comment-delete-button:hover {
+  background: #dc2626; /* red-600 */
+}
+
+.comments-form {
+  margin-bottom: 20px;
+}
+
+.comments-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 480px) {
+  .comments-container {
+    margin: 2rem 1rem;
+    padding: 1.25rem;
+  }
+
+  .comments-form {
+    flex-direction: column;
+  }
+
+  .comments-post-button {
+    width: 100%;
+  }
+
+  .comment-delete-button {
+    position: static;
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
+}
