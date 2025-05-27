@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { backendApi } from "../config";
 
 export default function Navbar({ user, setUser }) {
   const navigate = useNavigate();
+  const [loadingAdmin, setLoadingAdmin] = useState(false);
 
   const handleLogout = () => {
     navigate("/login");
@@ -12,13 +13,13 @@ export default function Navbar({ user, setUser }) {
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
       setUser(null);
-      navigate("/login");
     } catch (error) {
       alert("Logout failed: " + error.message);
     }
   };
 
   const becomeAdmin = async () => {
+    setLoadingAdmin(true);
     try {
       const res = await fetch(`${backendApi}/auth/permissions`, {
         method: "POST",
@@ -30,6 +31,11 @@ export default function Navbar({ user, setUser }) {
           permissions: ["read", "write", "delete", "deleteAny"],
         }),
       });
+
+      if (!res.ok) {
+        throw new Error("Failed to update permissions.");
+      }
+
       const updatedUser = {
         ...user,
         permissions: ["read", "write", "delete", "deleteAny"],
@@ -38,6 +44,8 @@ export default function Navbar({ user, setUser }) {
       localStorage.setItem("user", JSON.stringify(updatedUser));
     } catch (error) {
       alert("Error making admin request: " + error.message);
+    } finally {
+      setLoadingAdmin(false);
     }
   };
 
@@ -47,8 +55,7 @@ export default function Navbar({ user, setUser }) {
 
       {!user && (
         <>
-          <button onClick={() => navigate("/login")}>Login/SignUp</button>
-          {/* <button onClick={() => navigate("/signup")}>Signup</button> */}
+          <button onClick={() => navigate("/signup")}>Login/SignUp</button>
         </>
       )}
 
@@ -61,7 +68,9 @@ export default function Navbar({ user, setUser }) {
           <button onClick={handleLogout}>Logout</button>
           {user.permissions.includes("write") &&
             !user.permissions.includes("deleteAny") && (
-              <button onClick={becomeAdmin}>Become Admin</button>
+              <button onClick={becomeAdmin} disabled={loadingAdmin}>
+                {loadingAdmin ? "Becoming admin..." : "Become Admin"}
+              </button>
             )}
         </>
       )}

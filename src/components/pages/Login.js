@@ -11,9 +11,11 @@ const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const handleLogin = async () => {
     setError("");
+    setLoading(true); // Start loading
     try {
       const res = await axios.post(
         `${backendApi}/auth/login`,
@@ -24,14 +26,10 @@ const Login = ({ setUser }) => {
       const { accessToken } = res.data;
       const decoded = jwtDecode(accessToken);
 
-      // Store token and user info
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user", JSON.stringify(decoded));
 
-      // Update app state
       setUser(decoded);
-
-      // Navigate to comments page
       navigate("/comments");
     } catch (err) {
       if (err.response?.data?.error) {
@@ -39,6 +37,8 @@ const Login = ({ setUser }) => {
       } else {
         setError("Login failed. Please try again.");
       }
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -59,13 +59,20 @@ const Login = ({ setUser }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="login-button" onClick={handleLogin}>
-          Login
+        <button
+          className="login-button"
+          onClick={handleLogin}
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
         </button>
         {error && <p className="login-error">{error}</p>}
       </div>
       <p style={{ color: "white" }}>
         Don't have an account? <Link to="/signup">Signup here</Link>
+      </p>
+      <p style={{ color: "white" }}>
+        <Link to="/forgot-password">Forgot Password?</Link>
       </p>
     </div>
   );
