@@ -2,17 +2,45 @@ Levich Documentation
 
 Deployment Links
 
-Frontend GIthub link: https://github.com/robinrdj/levichfrontend Backend GIthub link: https://github.com/robinrdj/levichbackend Frontend Deployed link: https://levichfrontend.vercel.app/ Backend Deployed link: https://levichbackend.onrender.com/
+Frontend GIthub link: https://github.com/robinrdj/levichfrontend 
+
+Backend GIthub link: https://github.com/robinrdj/levichbackend 
+
+Frontend Deployed link: https://levichfrontend.vercel.app/ 
+
+Backend Deployed link: https://levichbackend.onrender.com/
 
 —----------------------------------------------------------------------------------------------------------------------------
 
-Setup Instructions For frontend Installation Steps 1.Clone repo & install dependencies git clone cd npm install 2.Start server npm start
+Setup Instructions For frontend Installation Steps 
 
-For backend Requirements Node.js MongoDB (local or Atlas) .env file with the following: ACCESS_SECRET= your_jwt_secret REFRESH_SECRET= your_jwt_secret RESET_PASSWORD_SECRET= your_jwt_secret FRONTEND_URL= your_frontend_url MONGO_URI= your_mongo_uri Installation Steps 1.Clone repo & install dependencies git clone cd npm install 2.Start MongoDB Locally: mongod
+1.Clone repo & install dependencies 
+
+git clone 
+
+cd 
+
+npm install 
+
+2.Start server npm start
+
+For backend Requirements Node.js MongoDB (local or Atlas) .env file with the following: ACCESS_SECRET= your_jwt_secret REFRESH_SECRET= your_jwt_secret RESET_PASSWORD_SECRET= your_jwt_secret FRONTEND_URL= your_frontend_url MONGO_URI= your_mongo_uri Installation Steps 
+
+1.Clone repo & install dependencies  
+
+git clone 
+
+cd npm install 
+
+2.Start MongoDB Locally: 
+
+mongod
 
 Or use MongoDB Atlas and update MONGO_URI in .env.
 
-3.Start server node index.js
+3.Start server 
+
+node index.js
 
 —----------------------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +56,9 @@ User Permissions Role Permissions guest read user read, write admin read, write,
 
 Curl Commands for testing The following curl commands works in: Linux/macOS terminals
 
-Git Bash / WSL / Bash on Windows Auth routes Sign Up curl -X POST https://levichbackend.onrender.com/api/auth/signup
+Git Bash / WSL / Bash on Windows Auth routes Sign Up 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/signup
 -H "Content-Type: application/json"
 -d '{ "name": "John Hyn", "email": "johnhyn@example.com", "password": "1az2vf3bg45ef6" }'
 
@@ -36,7 +66,15 @@ You will get {"message":"User created"}
 
 —------------------------------------------------
 
-Login curl -X POST https://levichbackend.onrender.com/api/auth/login
+----------------------
+
+note:
+the access token provided here as an example won't work
+
+-----------------
+Login 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/login
 -H "Content-Type: application/json"
 -d '{ "email": "johnhyn@example.com", "password": "1az2vf3bg45ef6" }'
 
@@ -46,10 +84,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzY1Mzc2OTAzMTNlYTkzYWRmYzFjNyI
 
 —------------------------------------------------
 
-Change Role to Admin curl -X POST https://levichbackend.onrender.com/api/auth/permissions
+Change Role to Admin 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/permissions
 -H "Content-Type: application/json"
 -H "Authorization: Bearer <ACCESS_TOKEN>"
 -d '{"email": "johnhyn@example.com"}'
+
 
 Example command with access token: curl -X POST https://levichbackend.onrender.com/api/auth/permissions
 -H "Content-Type: application/json"
@@ -60,11 +101,15 @@ You will get {"message":"Role & permissions updated","permissions":["read","writ
 
 —------------------------------------------------
 
-Comment routes To get all comments(public) curl https://levichbackend.onrender.com/api/comments
+Comment routes To get all comments(public) 
+
+curl https://levichbackend.onrender.com/api/comments
 
 —------------------------------------------------
 
-Post a Comment (auth required) curl -X POST https://levichbackend.onrender.com/api/comments
+Post a Comment (auth required) 
+
+curl -X POST https://levichbackend.onrender.com/api/comments
 -H "Authorization: Bearer <your_token_here>"
 -H "Content-Type: application/json"
 -d '{ "text": "This is a comment" }'
@@ -96,19 +141,26 @@ Similarly you could check for the password routes
 
 —------------------------------------------------
 
-Password routes Forgot password curl -X POST https://levichbackend.onrender.com/api/auth/forgot
+Password routes 
+Forgot password 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/forgot
 -H "Content-Type: application/json"
 -d '{ "email": "john@example.com" }'
 
 You will get {"message":"Reset link generated","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzY1Mzc2OTAzMTNlYTkzYWRmYzFjNyIsImlhdCI6MTc0ODM5NDYzNCwiZXhwIjoxNzQ4Mzk1NTM0fQ.B9MTar6QOnuuRnqtobOSLD4EAoQfERmwAxvkzwgekfw"}
 
-Reset password curl -X POST https://levichbackend.onrender.com/api/auth/reset/<TOKEN_FROM_FORGOT_PASSWORD_REQUEST>
+Reset password 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/reset/<TOKEN_FROM_FORGOT_PASSWORD_REQUEST>
 -H "Content-Type: application/json"
 -d '{ "password": "newSecurePassword123" }'
 
 Replace the token you received from the forgot password command which is in orange color in <TOKEN_FROM_FORGOT_PASSWORD_REQUEST>.
 
-Example command curl -X POST https://levichbackend.onrender.com/api/auth/reset/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzY1Mzc2OTAzMTNlYTkzYWRmYzFjNyIsImlhdCI6MTc0ODM5NDYzNCwiZXhwIjoxNzQ4Mzk1NTM0fQ.B9MTar6QOnuuRnqtobOSLD4EAoQfERmwAxvkzwgekfw
+Example command 
+
+curl -X POST https://levichbackend.onrender.com/api/auth/reset/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzY1Mzc2OTAzMTNlYTkzYWRmYzFjNyIsImlhdCI6MTc0ODM5NDYzNCwiZXhwIjoxNzQ4Mzk1NTM0fQ.B9MTar6QOnuuRnqtobOSLD4EAoQfERmwAxvkzwgekfw
 -H "Content-Type: application/json"
 -d '{ "password": "newSecurePassword123" }'
 
